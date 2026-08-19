@@ -1,0 +1,41 @@
+[
+  {
+    "model_name": "Logistic Regression",
+    "auroc": 0.9481,
+    "auprc": 0.7698,
+    "f1_score": 0.7778,
+    "sensitivity": 0.7583,
+    "specificity": 0.991,
+    "sens_at_85_spec": 0.9083,
+    "brier_score_raw": 0.0487,
+    "brier_score_calibrated": 0.0162,
+    "expected_calibration_error": 0.0099,
+    "is_primary": false
+  },
+  {
+    "model_name": "Random Forest",
+    "auroc": 0.9756,
+    "auprc": 0.8609,
+    "f1_score": 0.8347,
+    "sensitivity": 0.8417,
+    "specificity": 0.9918,
+    "sens_at_85_spec": 0.9583,
+    "brier_score_raw": 0.0208,
+    "brier_score_calibrated": 0.012,
+    "expected_calibration_error": 0.0101,
+    "is_primary": false
+  },
+  {
+    "model_name": "XGBoost",
+    "auroc": 0.9695,
+    "auprc": 0.8877,
+    "f1_score": 0.8608,
+    "sensitivity": 0.85,
+    "specificity": 0.9941,
+    "sens_at_85_spec": 0.9417,
+    "brier_score_raw": 0.0191,
+    "brier_score_calibrated": 0.0102,
+    "expected_calibration_error": 0.0097,
+    "is_primary": true
+  }
+]

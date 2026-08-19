@@ -1,0 +1,45 @@
+version: '3.8'
+
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: backend/Dockerfile
+    container_name: hai_sentinel_backend
+    ports:
+      - "8000:8000"
+    environment:
+      - ENVIRONMENT=production
+      - DATABASE_URL=postgresql://hai_user:hai_secure_pass@db:5432/hai_sentinel
+      - SECRET_KEY=production-secret-key-replace-in-env-file
+      - CORS_ORIGINS=http://localhost:5173,http://localhost:80
+    depends_on:
+      - db
+    restart: unless-stopped
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: hai_sentinel_frontend
+    ports:
+      - "5173:80"
+    depends_on:
+      - backend
+    restart: unless-stopped
+
+  db:
+    image: postgres:15-alpine
+    container_name: hai_sentinel_db
+    environment:
+      POSTGRES_USER: hai_user
+      POSTGRES_PASSWORD: hai_secure_pass
+      POSTGRES_DB: hai_sentinel
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    restart: unless-stopped
+
+volumes:
+  pgdata:

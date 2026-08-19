@@ -1,0 +1,36 @@
+{
+  "dataset_name": "HAI-Sentinel Synthetic ICU Cohort (NHSN-Aligned)",
+  "creation_timestamp": "2026-08-19T14:06:17.293333",
+  "n_patients": 250,
+  "total_hourly_records": 21358,
+  "hai_prevalence_pct": 18.0,
+  "wards": [
+    "ICU-A (Medical)",
+    "ICU-B (Surgical)",
+    "ICU-C (Cardiac)",
+    "Ward-3 (Stepdown)"
+  ],
+  "features_included": [
+    "patient_id",
+    "hour_from_admission",
+    "timestamp",
+    "heart_rate",
+    "temp_c",
+    "sbp",
+    "dbp",
+    "map",
+    "resp_rate",
+    "spo2",
+    "wbc",
+    "platelets",
+    "creatinine",
+    "lactate",
+    "cvc_duration_hours",
+    "foley_duration_hours",
+    "vent_duration_hours",
+    "total_device_burden",
+    "broad_spec_antibiotics_72h",
+    "target_hai_next_24h"
+  ],
+  "scientific_disclaimer": "SYNTHETIC BENCHMARK DATA. No PHI. Strictly for prototype validation."
+}
