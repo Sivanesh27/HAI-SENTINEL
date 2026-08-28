@@ -2,7 +2,7 @@
   "model_id": "hai_sentinel_xgboost_v1",
   "primary_model": "XGBoost",
   "version": "1.0.0",
-  "training_date": "2026-08-19T14:06:28.502736",
+  "training_date": "2026-08-28T06:20:13.064121",
   "dataset_name": "HAI-Sentinel Synthetic ICU Cohort (NHSN-Aligned)",
   "features": [
     "age",
