@@ -41,7 +41,7 @@ app.include_router(demo_router)
 app.include_router(telemetry_router)
 
 
-@app.get("/api/health", tags=["System"])
+@app.api_route("/api/health", methods=["GET", "HEAD"], tags=["System"])
 def health_check():
     """Health check endpoint confirming API status and scientific disclaimer."""
     return {
@@ -56,8 +56,10 @@ def health_check():
     }
 
 
-@app.get("/", tags=["Root"])
+@app.api_route("/", methods=["GET", "HEAD"], tags=["Root"])
 def root():
     return {
+        "status": "online",
         "message": "Welcome to HAI-Sentinel API. Visit /docs for OpenAPI documentation."
     }
+
