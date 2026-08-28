@@ -14,7 +14,19 @@ import {
   AuditLogItem
 } from '../types';
 
-const API_BASE = '/api';
+const getApiBase = (): string => {
+  const envUrl = (import.meta as any).env?.VITE_API_URL;
+  if (envUrl && typeof envUrl === 'string' && envUrl.trim().length > 0) {
+    const clean = envUrl.trim().replace(/\/$/, '');
+    return clean.endsWith('/api') ? clean : `${clean}/api`;
+  }
+  if (typeof window !== 'undefined' && window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1') {
+    return 'https://hai-sentinel-api.onrender.com/api';
+  }
+  return '/api';
+};
+
+const API_BASE = getApiBase();
 
 export async function fetchHealth(): Promise<HealthCheckResponse> {
   const res = await fetch(`${API_BASE}/health`);

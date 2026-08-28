@@ -33,10 +33,13 @@ export function Dashboard() {
   const [dashboard, setDashboard] = useState<DashboardResponse | null>(null);
   const [dataQuality, setDataQuality] = useState<DataQualityResponse | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
   const [demoOpen, setDemoOpen] = useState<boolean>(false);
   const { theme, isStreaming, liveBeds, lastStreamTime } = useUI();
 
-  useEffect(() => {
+  const loadData = () => {
+    setLoading(true);
+    setError(null);
     Promise.all([fetchDashboard(), fetchDataQuality()])
       .then(([dashData, dqData]) => {
         setDashboard(dashData);
@@ -44,19 +47,57 @@ export function Dashboard() {
         setLoading(false);
       })
       .catch((err) => {
-        console.error(err);
+        console.error("Dashboard data fetch error:", err);
+        setError(err?.message || "Failed to connect to backend API server.");
         setLoading(false);
       });
+  };
+
+  useEffect(() => {
+    loadData();
   }, []);
 
-  if (loading || !dashboard) {
+  if (loading) {
     return (
       <div className="flex items-center justify-center min-h-[60vh]">
         <div className="flex flex-col items-center space-y-4">
-          <div className="w-10 h-10 border-3 border-cyan-500 border-t-transparent rounded-full animate-spin"></div>
-          <span className="text-sm font-mono text-slate-500 dark:text-slate-400 font-semibold">
-            Loading Infection-Prevention Command Center...
+          <div className="w-12 h-12 border-4 border-cyan-500 border-t-transparent rounded-full animate-spin"></div>
+          <span className="text-base font-mono text-slate-600 dark:text-slate-300 font-semibold animate-pulse">
+            Connecting to HAI-Sentinel Intelligence Engine...
           </span>
+          <span className="text-xs text-slate-400">Loading continuous ICU telemetry & calibrated model predictions</span>
+        </div>
+      </div>
+    );
+  }
+
+  if (error || !dashboard) {
+    return (
+      <div className="flex items-center justify-center min-h-[60vh] p-4">
+        <div className="max-w-md w-full rounded-2xl border border-rose-200 dark:border-rose-900/50 bg-white dark:bg-slate-900 p-6 shadow-xl text-center space-y-4">
+          <div className="w-12 h-12 rounded-full bg-rose-100 dark:bg-rose-950/50 border border-rose-300 dark:border-rose-800 text-rose-600 dark:text-rose-400 flex items-center justify-center mx-auto">
+            <AlertTriangle className="w-6 h-6" />
+          </div>
+          <div>
+            <h3 className="text-lg font-bold text-slate-900 dark:text-white">API Connection Notice</h3>
+            <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">
+              {error || "Backend service is warming up or initializing."}
+            </p>
+          </div>
+          <div className="pt-2 flex flex-col gap-2">
+            <button
+              onClick={loadData}
+              className="w-full px-4 py-2.5 rounded-xl bg-cyan-600 hover:bg-cyan-500 text-white text-sm font-semibold transition-all shadow-md active:scale-95"
+            >
+              🔄 Retry Connection
+            </button>
+            <button
+              onClick={() => setDemoOpen(true)}
+              className="w-full px-4 py-2 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 text-xs font-semibold transition-all"
+            >
+              ▶️ Open 90s Guided Demo Mode (Offline-Ready)
+            </button>
+          </div>
         </div>
       </div>
     );
