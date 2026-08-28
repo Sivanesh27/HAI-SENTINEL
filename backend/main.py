@@ -7,6 +7,7 @@ from backend.routers.dashboard import router as dashboard_router
 from backend.routers.models_router import router as models_router
 from backend.routers.audit import router as audit_router
 from backend.routers.demo import router as demo_router
+from backend.routers.telemetry import router as telemetry_router
 
 from backend.database import engine, Base
 
@@ -37,6 +38,7 @@ app.include_router(dashboard_router)
 app.include_router(models_router)
 app.include_router(audit_router)
 app.include_router(demo_router)
+app.include_router(telemetry_router)
 
 
 @app.get("/api/health", tags=["System"])

@@ -7,13 +7,7 @@ import {
   Sliders,
   Play,
   RotateCcw,
-  Sparkles,
   HelpCircle,
-  Activity,
-  Droplets,
-  Thermometer,
-  Wind,
-  TrendingUp,
 } from 'lucide-react';
 
 export function ScenarioSimulator() {
@@ -93,72 +87,56 @@ export function ScenarioSimulator() {
   };
 
   return (
-    <div className="space-y-6 max-w-7xl mx-auto pb-12">
+    <div className="space-y-8 max-w-7xl mx-auto pb-12 transition-colors duration-200">
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
           <div className="flex items-center space-x-3">
-            <div className="p-2 rounded-lg bg-cyan-500/10 text-cyan-400 border border-cyan-500/20">
-              <Sliders className="w-5 h-5" />
+            <div className="p-2.5 rounded-xl bg-purple-500/10 text-purple-600 dark:text-purple-400 border border-purple-500/20">
+              <Sliders className="w-6 h-6" />
             </div>
             <div>
-              <h2 className="text-xl font-bold text-white tracking-tight">
-                What-If Non-Causal Scenario Simulator
+              <h2 className="text-2xl font-extrabold text-slate-900 dark:text-white tracking-tight">
+                What-If Counterfactual Scenario Simulator
               </h2>
-              <p className="text-xs text-slate-400">
-                Explore model sensitivity to hypothetical clinical parameter perturbations
+              <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400">
+                Explore model sensitivity under hypothetical clinical perturbations &amp; catheter bundle changes
               </p>
             </div>
           </div>
         </div>
-
-        <div className="flex items-center space-x-2">
-          <span className="text-xs text-slate-400 font-mono">Reference Patient:</span>
-          <span className="px-2.5 py-1 rounded bg-slate-800 border border-slate-700 text-cyan-300 font-mono font-bold text-xs">
-            DEMO-1042 (82.0% Critical Baseline)
-          </span>
-        </div>
       </div>
 
-      {/* Prominent Non-Causal Framing Alert */}
-      <div className="p-4 rounded-xl border border-amber-500/40 bg-amber-500/10 text-xs text-amber-200 flex items-start space-x-3 shadow-lg">
-        <HelpCircle className="w-5 h-5 text-amber-400 flex-shrink-0 mt-0.5" />
+      {/* Mandatory Non-Causal Scientific Notice Banner */}
+      <div className="p-5 rounded-3xl border border-purple-200 dark:border-purple-500/30 bg-purple-50/70 dark:bg-purple-500/10 text-xs text-purple-900 dark:text-purple-200 flex items-start space-x-3 shadow-xs">
+        <HelpCircle className="w-5 h-5 text-purple-600 dark:text-purple-400 flex-shrink-0 mt-0.5" />
         <div className="space-y-1">
-          <strong className="text-amber-100 font-bold">Scientific & Ethical Disclaimer — Non-Causal Simulator:</strong>
-          <p className="text-amber-300/90 leading-relaxed">
-            This module evaluates statistical tree model behavior under altered inputs. It does NOT predict clinical causal treatment effects or guarantee that removing a central line or normalizing temperature will produce the estimated risk delta. Use exclusively for model interpretability and sensitivity analysis.
+          <strong className="font-bold text-purple-950 dark:text-purple-100 text-sm">
+            MODEL-BASED SIMULATION — NOT A CAUSAL CLINICAL PREDICTION
+          </strong>
+          <p className="text-purple-900/90 dark:text-purple-300/90 leading-relaxed text-xs">
+            This module evaluates statistical tree model sensitivity by perturbing feature inputs. Results illustrate model behavior and do NOT imply that changing a single physiological parameter or device hour will deterministically alter clinical outcomes in a live patient.
           </p>
         </div>
       </div>
 
-      {/* Main Grid: Controls on Left, Simulation Results on Right */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
-        {/* Left Column: Parameter Sliders */}
-        <div className="lg:col-span-5 rounded-xl border border-slate-800 bg-slate-900/80 p-6 space-y-6 shadow-xl">
-          <div className="flex justify-between items-center border-b border-slate-800 pb-3">
-            <h3 className="text-sm font-bold text-white uppercase tracking-wider flex items-center space-x-2">
-              <Sparkles className="w-4 h-4 text-cyan-400" />
-              <span>Hypothetical Parameter Adjustments</span>
+      {/* Simulator Inputs & Result Comparison Grid */}
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
+        {/* Left Column (7 cols): Interactive Sliders */}
+        <div className="lg:col-span-7 rounded-3xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-6 sm:p-8 space-y-6 shadow-sm">
+          <div className="flex items-center justify-between border-b border-slate-200 dark:border-slate-800 pb-4">
+            <h3 className="text-lg font-bold text-slate-900 dark:text-white tracking-tight">
+              Perturbation Parameters (Patient DEMO-1042)
             </h3>
-            <button
-              onClick={handleReset}
-              className="text-xs text-slate-400 hover:text-white flex items-center space-x-1"
-            >
-              <RotateCcw className="w-3 h-3" />
-              <span>Reset</span>
-            </button>
+            <span className="text-xs font-mono text-slate-500">t = 60h Snapshot</span>
           </div>
 
-          {/* Sliders List */}
           <div className="space-y-5">
-            {/* CVC Duration */}
-            <div className="space-y-2">
-              <div className="flex justify-between text-xs">
-                <span className="text-slate-300 font-medium flex items-center space-x-1.5">
-                  <Wind className="w-3.5 h-3.5 text-cyan-400" />
-                  <span>Central Venous Catheter Exposure:</span>
-                </span>
-                <strong className="font-mono text-cyan-400">{cvcHours} hrs</strong>
+            {/* CVC Hours */}
+            <div className="space-y-2 p-4 rounded-2xl bg-slate-50 dark:bg-slate-950/60 border border-slate-200 dark:border-slate-800">
+              <div className="flex justify-between items-center text-xs">
+                <span className="font-bold text-slate-700 dark:text-slate-300">Central Line (CVC) Dwell</span>
+                <span className="font-mono font-extrabold text-cyan-600 dark:text-cyan-400">{cvcHours} hrs</span>
               </div>
               <input
                 type="range"
@@ -166,24 +144,17 @@ export function ScenarioSimulator() {
                 max="120"
                 step="6"
                 value={cvcHours}
-                onChange={(e) => setCvcHours(Number(e.target.value))}
-                className="w-full h-1.5 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-cyan-500"
+                onChange={(e) => setCvcHours(parseFloat(e.target.value))}
+                className="w-full accent-cyan-500 cursor-pointer"
               />
-              <div className="flex justify-between text-[10px] text-slate-500 font-mono">
-                <span>0 hrs (Removed)</span>
-                <span>Baseline: 60 hrs</span>
-                <span>120 hrs</span>
-              </div>
+              <div className="text-[11px] text-slate-400">Baseline was 60.0h indwelling exposure</div>
             </div>
 
-            {/* Foley Duration */}
-            <div className="space-y-2">
-              <div className="flex justify-between text-xs">
-                <span className="text-slate-300 font-medium flex items-center space-x-1.5">
-                  <Droplets className="w-3.5 h-3.5 text-blue-400" />
-                  <span>Indwelling Urinary Catheter Exposure:</span>
-                </span>
-                <strong className="font-mono text-blue-400">{foleyHours} hrs</strong>
+            {/* Foley Hours */}
+            <div className="space-y-2 p-4 rounded-2xl bg-slate-50 dark:bg-slate-950/60 border border-slate-200 dark:border-slate-800">
+              <div className="flex justify-between items-center text-xs">
+                <span className="font-bold text-slate-700 dark:text-slate-300">Foley Catheter Dwell</span>
+                <span className="font-mono font-extrabold text-cyan-600 dark:text-cyan-400">{foleyHours} hrs</span>
               </div>
               <input
                 type="range"
@@ -191,49 +162,35 @@ export function ScenarioSimulator() {
                 max="120"
                 step="6"
                 value={foleyHours}
-                onChange={(e) => setFoleyHours(Number(e.target.value))}
-                className="w-full h-1.5 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-blue-500"
+                onChange={(e) => setFoleyHours(parseFloat(e.target.value))}
+                className="w-full accent-cyan-500 cursor-pointer"
               />
-              <div className="flex justify-between text-[10px] text-slate-500 font-mono">
-                <span>0 hrs</span>
-                <span>Baseline: 60 hrs</span>
-                <span>120 hrs</span>
-              </div>
+              <div className="text-[11px] text-slate-400">Baseline was 60.0h indwelling exposure</div>
             </div>
 
-            {/* Body Temperature */}
-            <div className="space-y-2">
-              <div className="flex justify-between text-xs">
-                <span className="text-slate-300 font-medium flex items-center space-x-1.5">
-                  <Thermometer className="w-3.5 h-3.5 text-amber-400" />
-                  <span>Core Body Temperature (°C):</span>
-                </span>
-                <strong className="font-mono text-amber-400">{tempC.toFixed(1)} °C</strong>
+            {/* Core Temp */}
+            <div className="space-y-2 p-4 rounded-2xl bg-slate-50 dark:bg-slate-950/60 border border-slate-200 dark:border-slate-800">
+              <div className="flex justify-between items-center text-xs">
+                <span className="font-bold text-slate-700 dark:text-slate-300">Hypothetical Core Temp</span>
+                <span className="font-mono font-extrabold text-rose-600 dark:text-rose-400">{tempC.toFixed(1)} &deg;C</span>
               </div>
               <input
                 type="range"
                 min="36.0"
-                max="40.5"
+                max="40.0"
                 step="0.1"
                 value={tempC}
-                onChange={(e) => setTempC(Number(e.target.value))}
-                className="w-full h-1.5 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-amber-500"
+                onChange={(e) => setTempC(parseFloat(e.target.value))}
+                className="w-full accent-rose-500 cursor-pointer"
               />
-              <div className="flex justify-between text-[10px] text-slate-500 font-mono">
-                <span>36.0°C</span>
-                <span>Baseline: 38.6°C</span>
-                <span>40.5°C</span>
-              </div>
+              <div className="text-[11px] text-slate-400">Baseline was 38.6&deg;C (Fever spike)</div>
             </div>
 
             {/* WBC Count */}
-            <div className="space-y-2">
-              <div className="flex justify-between text-xs">
-                <span className="text-slate-300 font-medium flex items-center space-x-1.5">
-                  <Activity className="w-3.5 h-3.5 text-purple-400" />
-                  <span>White Blood Cell Count (WBC):</span>
-                </span>
-                <strong className="font-mono text-purple-400">{wbc.toFixed(1)} k/µL</strong>
+            <div className="space-y-2 p-4 rounded-2xl bg-slate-50 dark:bg-slate-950/60 border border-slate-200 dark:border-slate-800">
+              <div className="flex justify-between items-center text-xs">
+                <span className="font-bold text-slate-700 dark:text-slate-300">Hypothetical WBC Count</span>
+                <span className="font-mono font-extrabold text-amber-600 dark:text-amber-400">{wbc.toFixed(1)} k/µL</span>
               </div>
               <input
                 type="range"
@@ -241,118 +198,77 @@ export function ScenarioSimulator() {
                 max="25.0"
                 step="0.5"
                 value={wbc}
-                onChange={(e) => setWbc(Number(e.target.value))}
-                className="w-full h-1.5 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-purple-500"
+                onChange={(e) => setWbc(parseFloat(e.target.value))}
+                className="w-full accent-amber-500 cursor-pointer"
               />
-              <div className="flex justify-between text-[10px] text-slate-500 font-mono">
-                <span>4.0 k/µL</span>
-                <span>Baseline: 18.4 k/µL</span>
-                <span>25.0 k/µL</span>
-              </div>
-            </div>
-
-            {/* Temperature Slope */}
-            <div className="space-y-2">
-              <div className="flex justify-between text-xs">
-                <span className="text-slate-300 font-medium flex items-center space-x-1.5">
-                  <TrendingUp className="w-3.5 h-3.5 text-rose-400" />
-                  <span>12h Temperature Trend Slope:</span>
-                </span>
-                <strong className="font-mono text-rose-400">{tempSlope.toFixed(2)} °C/h</strong>
-              </div>
-              <input
-                type="range"
-                min="-0.1"
-                max="0.2"
-                step="0.02"
-                value={tempSlope}
-                onChange={(e) => setTempSlope(Number(e.target.value))}
-                className="w-full h-1.5 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-rose-500"
-              />
-              <div className="flex justify-between text-[10px] text-slate-500 font-mono">
-                <span>-0.10 °C/h</span>
-                <span>Baseline: +0.08</span>
-                <span>+0.20 °C/h</span>
-              </div>
+              <div className="text-[11px] text-slate-400">Baseline was 18.4 k/µL (Severe leukocytosis)</div>
             </div>
           </div>
 
-          <button
-            onClick={handleSimulate}
-            disabled={loading}
-            className="w-full py-3 bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-500 hover:to-blue-500 text-white rounded-xl text-xs font-bold shadow-lg shadow-cyan-600/30 transition flex items-center justify-center space-x-2"
-          >
-            <Play className="w-4 h-4 fill-current" />
-            <span>{loading ? 'Executing Inference Simulation...' : 'Run What-If Simulation'}</span>
-          </button>
+          <div className="flex items-center space-x-3 pt-3">
+            <button
+              onClick={handleSimulate}
+              disabled={loading}
+              className="flex-1 py-3 bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white rounded-xl text-xs font-bold shadow-md shadow-purple-500/20 transition flex items-center justify-center space-x-2"
+            >
+              <Play className="w-4 h-4 fill-current" />
+              <span>{loading ? 'Evaluating Model...' : 'Execute Counterfactual Simulation'}</span>
+            </button>
+
+            <button
+              onClick={handleReset}
+              className="p-3 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-600 dark:text-slate-300 rounded-xl transition border border-slate-200 dark:border-slate-700"
+              title="Reset sliders"
+            >
+              <RotateCcw className="w-4 h-4" />
+            </button>
+          </div>
         </div>
 
-        {/* Right Column: Simulation Comparison & Dynamic SHAP Attributions */}
-        <div className="lg:col-span-7 space-y-6">
-          {result ? (
-            <div className="space-y-6">
-              {/* Delta Comparison Card */}
-              <div className="rounded-xl border border-slate-800 bg-slate-900/90 p-6 space-y-4 shadow-xl">
-                <div className="flex justify-between items-center border-b border-slate-800 pb-3">
-                  <h3 className="text-sm font-bold text-white uppercase tracking-wider">
-                    Model Response & Predicted Risk Delta
-                  </h3>
-                  <span className="text-xs px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-300 font-bold font-mono">
-                    SIMULATION COMPLETE
-                  </span>
-                </div>
+        {/* Right Column (5 cols): Simulation Results */}
+        <div className="lg:col-span-5 rounded-3xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-6 sm:p-8 space-y-6 shadow-sm">
+          <div className="border-b border-slate-200 dark:border-slate-800 pb-4">
+            <h3 className="text-lg font-bold text-slate-900 dark:text-white tracking-tight">
+              Simulation Comparison Matrix
+            </h3>
+            <p className="text-xs text-slate-500 dark:text-slate-400">Baseline observation vs. Counterfactual hypothesis</p>
+          </div>
 
-                <div className="grid grid-cols-3 gap-3 text-center">
-                  <div className="p-4 rounded-xl bg-slate-950/80 border border-slate-800">
-                    <span className="text-[10px] text-slate-500 uppercase block font-medium">Baseline Risk</span>
-                    <div className="text-2xl font-bold font-mono text-rose-400 mt-1">
-                      {result.baseline_risk_pct.toFixed(1)}%
-                    </div>
-                    <div className="mt-1">
-                      <RiskBadge category={result.baseline_category} size="sm" />
-                    </div>
-                  </div>
-
-                  <div className="p-4 rounded-xl bg-slate-950/80 border border-slate-800">
-                    <span className="text-[10px] text-slate-500 uppercase block font-medium">Simulated Risk</span>
-                    <div className="text-2xl font-bold font-mono text-cyan-400 mt-1">
-                      {result.simulated_risk_pct.toFixed(1)}%
-                    </div>
-                    <div className="mt-1">
-                      <RiskBadge category={result.simulated_category} size="sm" />
-                    </div>
-                  </div>
-
-                  <div className="p-4 rounded-xl bg-slate-950/80 border border-slate-800">
-                    <span className="text-[10px] text-slate-500 uppercase block font-medium">Risk Delta (&Delta;)</span>
-                    <div
-                      className={`text-2xl font-bold font-mono mt-1 ${
-                        result.delta_risk_pct < 0 ? 'text-emerald-400' : 'text-rose-400'
-                      }`}
-                    >
-                      {result.delta_risk_pct > 0 ? `+${result.delta_risk_pct.toFixed(1)}%` : `${result.delta_risk_pct.toFixed(1)}%`}
-                    </div>
-                    <span className="text-[10px] text-slate-400 font-mono">Statistical Shift</span>
-                  </div>
-                </div>
+          <div className="grid grid-cols-2 gap-4">
+            {/* Baseline */}
+            <div className="p-4 rounded-2xl bg-slate-50 dark:bg-slate-950/60 border border-slate-200 dark:border-slate-800 space-y-2">
+              <span className="text-[11px] text-slate-500 uppercase font-bold">Observed Baseline</span>
+              <div className="text-2xl sm:text-3xl font-extrabold font-mono text-rose-600 dark:text-rose-400">
+                82.0%
               </div>
-
-              {/* Dynamic SHAP Explanations for the Simulated Point */}
-              <SHAPContributionsCard explanation={result.simulated_explanation} />
+              <RiskBadge category="CRITICAL" size="sm" />
             </div>
-          ) : (
-            <div className="rounded-xl border border-slate-800 bg-slate-900/40 p-12 text-center space-y-3">
-              <div className="inline-flex p-3 rounded-full bg-cyan-500/10 text-cyan-400 border border-cyan-500/20">
-                <Sliders className="w-8 h-8" />
+
+            {/* Simulated */}
+            <div className="p-4 rounded-2xl bg-cyan-50/50 dark:bg-slate-950/60 border border-cyan-200 dark:border-cyan-500/40 space-y-2">
+              <span className="text-[11px] text-cyan-700 dark:text-cyan-400 uppercase font-bold">Simulated Outcome</span>
+              <div className="text-2xl sm:text-3xl font-extrabold font-mono text-cyan-700 dark:text-cyan-300">
+                {result ? `${result.simulated_risk_pct.toFixed(1)}%` : '--'}
               </div>
-              <h3 className="text-base font-bold text-white">Adjust Parameters & Run Simulation</h3>
-              <p className="text-xs text-slate-400 max-w-md mx-auto">
-                Modify device dwell durations, temperature slope, or laboratory values on the left panel to observe how the gradient-boosted decision trees dynamically alter risk scores and feature attributions.
+              {result && <RiskBadge category={result.simulated_category} size="sm" />}
+            </div>
+          </div>
+
+          {result && (
+            <div className="p-4 rounded-2xl bg-emerald-50/60 dark:bg-emerald-500/10 border border-emerald-200 dark:border-emerald-500/30 text-xs space-y-1">
+              <div className="font-bold text-emerald-800 dark:text-emerald-300">
+                Estimated Risk Shift: {result.delta_risk_pct.toFixed(1)}%
+              </div>
+              <p className="text-slate-600 dark:text-slate-400 text-[11px]">
+                Removing central line dwell hours and normalizing temperature &amp; WBC significantly attenuates positive SHAP log-odds.
               </p>
             </div>
           )}
         </div>
       </div>
+
+      {/* SHAP Attributions for the Simulated Scenario */}
+      {result && <SHAPContributionsCard explanation={result.simulated_explanation} />}
     </div>
   );
 }

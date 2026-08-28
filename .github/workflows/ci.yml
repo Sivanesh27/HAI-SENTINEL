@@ -1,0 +1,64 @@
+name: HAI-Sentinel CI/CD Pipeline
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+
+jobs:
+  backend-test-and-lint:
+    name: Backend CI (FastAPI + XGBoost + TreeSHAP)
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+
+      - name: Install Backend Dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Train and Cache ML Models
+        run: |
+          python -m ml.train
+
+      - name: Seed Database
+        run: |
+          python -m backend.database_seeder
+
+      - name: Run Backend Pytest Suite
+        run: |
+          pytest -v --durations=10
+
+  frontend-test-and-build:
+    name: Frontend CI (React 18 + Vite + TypeScript + Tailwind)
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js 20.x
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+          cache-dependency-path: 'frontend/package-lock.json'
+
+      - name: Install Frontend Dependencies
+        working-directory: ./frontend
+        run: |
+          npm ci
+
+      - name: Typecheck and Build Production Bundle
+        working-directory: ./frontend
+        run: |
+          npm run build

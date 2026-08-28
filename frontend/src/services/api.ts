@@ -132,3 +132,29 @@ export async function createAuditLog(entry: {
   if (!res.ok) throw new Error(`Failed to record audit log: ${res.statusText}`);
   return res.json();
 }
+
+export async function fetchLiveTelemetryFeed(): Promise<import('../types').LiveTelemetryFeedResponse> {
+  const res = await fetch(`${API_BASE}/telemetry/live-feed`);
+  if (!res.ok) throw new Error(`Failed to fetch live telemetry feed: ${res.statusText}`);
+  return res.json();
+}
+
+export async function calculateLiveTriage(payload: import('../types').LiveTriageRequest): Promise<import('../types').LiveTriageResponse> {
+  const res = await fetch(`${API_BASE}/telemetry/triage-calculator`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(payload)
+  });
+  if (!res.ok) throw new Error(`Failed to compute live triage: ${res.statusText}`);
+  return res.json();
+}
+
+export async function ingestLiveTelemetry(payload: Record<string, any>): Promise<any> {
+  const res = await fetch(`${API_BASE}/telemetry/ingest`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(payload)
+  });
+  if (!res.ok) throw new Error(`Failed to ingest live telemetry: ${res.statusText}`);
+  return res.json();
+}

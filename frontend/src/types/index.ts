@@ -334,3 +334,56 @@ export interface AuditLogItem {
   model_version: string;
   details: Record<string, any>;
 }
+
+export interface LiveTelemetryItem {
+  patient_id: string;
+  patient_name: string;
+  mrn: string;
+  bed: string;
+  ward_id: string;
+  current_risk: number;
+  risk_velocity: number;
+  rapid_escalation: boolean;
+  risk_category: RiskCategory;
+  review_priority: ReviewPriority;
+  last_pulse: string;
+}
+
+export interface LiveTelemetryFeedResponse {
+  timestamp: string;
+  active_stream_beds: number;
+  hospital_status: string;
+  live_telemetry: LiveTelemetryItem[];
+}
+
+export interface LiveTriageRequest {
+  age: number;
+  gender: string;
+  charlson_index: number;
+  temp_c: number;
+  heart_rate: number;
+  resp_rate: number;
+  map: number;
+  spo2: number;
+  wbc: number;
+  lactate: number;
+  platelets: number;
+  cvc_dwell_hours: number;
+  foley_dwell_hours: number;
+  vent_dwell_hours: number;
+}
+
+export interface LiveTriageResponse {
+  calibrated_risk_pct: number;
+  risk_category: RiskCategory;
+  clinical_review_priority: string;
+  confidence_level: ConfidenceLevel;
+  data_completeness_pct: number;
+  uncertainty_margin: number;
+  expected_calibration_error: number;
+  brier_score: number;
+  top_positive_drivers: Array<{ feature_name: string; contribution_value: number; display_name: string; clinical_category: string }>;
+  top_negative_drivers: Array<{ feature_name: string; contribution_value: number; display_name: string; clinical_category: string }>;
+  inference_latency_ms: number;
+  non_causal_notice: string;
+}

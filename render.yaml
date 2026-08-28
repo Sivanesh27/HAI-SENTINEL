@@ -1,0 +1,22 @@
+services:
+  - type: web
+    name: hai-sentinel-api
+    env: python
+    region: oregon
+    plan: free
+    branch: main
+    buildCommand: "pip install --upgrade pip && pip install -r requirements.txt && python -m ml.train && python -m backend.database_seeder"
+    startCommand: "uvicorn backend.main:app --host 0.0.0.0 --port $PORT --workers 2"
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.11.9
+      - key: DATABASE_URL
+        value: sqlite:///./hai_sentinel.db
+      - key: ENVIRONMENT
+        value: production
+      - key: LOG_LEVEL
+        value: INFO
+      - key: CORS_ORIGINS
+        value: "https://hai-sentinel.vercel.app,http://localhost:5173,http://localhost:3000"
+      - key: DEMO_MODE
+        value: "true"
